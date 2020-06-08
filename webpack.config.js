@@ -1,8 +1,8 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    electron_app: './src/electron_app.js',
     index: './src/index.js',
   },
   module: {
@@ -12,13 +12,6 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
-        }
-      },
-      {
-        test: /src\/electron_app\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-            loader: "file-loader"
         }
       },
       {
@@ -62,6 +55,12 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./public/index.html",
       filename: "./index.html"
-    })
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: "src/electron_app.js", to: "electron_app.js" },
+        { from: "package.json", to: "package.json" },
+      ],
+    }),
   ]
 };
