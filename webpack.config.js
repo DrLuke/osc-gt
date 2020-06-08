@@ -1,6 +1,10 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  entry: {
+    electron_app: './src/electron_app.js',
+    index: './src/index.js',
+  },
   module: {
     rules: [
       {
@@ -8,6 +12,13 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: "babel-loader"
+        }
+      },
+      {
+        test: /src\/electron_app\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+            loader: "file-loader"
         }
       },
       {
@@ -31,6 +42,14 @@ module.exports = {
       },
       {
         test: /\.svg$/,
+        use: [
+          {
+            loader: "file-loader"
+          }
+        ]
+      },
+      {
+        test: /\.json$/,
         use: [
           {
             loader: "file-loader"
